@@ -1,18 +1,16 @@
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './HomePage';
+import IntervalTraining from './IntervalTraining';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <ul>
-        <li>
-          <a href='intervalIdentification'>Interval Identification</a>
-        </li>
-        <li>
-          <a href='chordIdentification'>Chord Identification</a>
-        </li>
-      </ul>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/intervalTraining" element={<IntervalTraining />} />
+      </Routes>
+    </Router>
   );
 }
 
