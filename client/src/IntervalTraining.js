@@ -25,13 +25,12 @@ function randomInterval() {
     const randomNote = notes[Math.floor(Math.random() * notes.length)];
     const randomOctave = Math.floor(Math.random() * 2 + 3);
     const baseNote = randomNote + randomOctave.toString();
-    console.log(baseNote);
 
     // Extract interval values and pick a random one
     const intervalKeys = Object.keys(INTERVALS);
-    let randomIntervalValue = intervalKeys[Math.floor(Math.random() * intervalKeys.length)];
-    currentInterval = randomIntervalValue;
-    randomIntervalValue = INTERVALS[randomIntervalValue];
+    const randomIntervalName = intervalKeys[Math.floor(Math.random() * intervalKeys.length)];
+    currentInterval = randomIntervalName;
+    const randomIntervalValue = INTERVALS[randomIntervalName];
     // Extract the base note and octave
     const baseNoteLetter = baseNote.slice(0, -1); // Assumes the last character is the octave number
     const baseNoteOctave = parseInt(baseNote.slice(-1), 10);
@@ -48,7 +47,8 @@ function randomInterval() {
 
     // Construct the new note
     const newNote = notes[newNoteIndex] + newOctave;
-
+    console.log(randomIntervalName);
+    console.log(baseNote, newNote);
     return { baseNote, newNote };
 }
 
@@ -59,7 +59,8 @@ function playRandomInterval(synth) {
     synth.triggerAttackRelease(newNote, "8n", now + 1);
 }
 
-function submitGuess(interval) {
+function submitGuess(interval, event) {
+    event.stopPropagation();
     if (interval === currentInterval) {
         console.log('Correct!');
     } else {
@@ -79,7 +80,7 @@ function IntervalTraining() {
                 {Object.keys(INTERVALS).map((interval) => (
                     <li>
                         <button key={interval}
-                            onClick={() => submitGuess(interval)}>
+                            onClick={(event) => submitGuess(interval, event)}>
                                 {interval.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}
                         </button>
                     </li>
