@@ -1,5 +1,6 @@
 import * as Tone from 'tone';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 let currentInterval = null;
@@ -38,7 +39,7 @@ function IntervalTraining() {
     function randomNote() {
         const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
         const randomNote = notes[Math.floor(Math.random() * notes.length)];
-        const randomOctave = Math.floor((Math.random() * 3) + 3);
+        const randomOctave = Math.floor((Math.random() * (5 - 3 + 1)) + 3);
         baseNote = randomNote + randomOctave.toString();
         return baseNote;
     }
@@ -125,6 +126,7 @@ function IntervalTraining() {
 
     return (
     <div>
+        <Link to='/'>Home</Link>
         <h1>Interval Training</h1>
         <div class="container" onClick={() => playInterval()}>
             <div className="intervalsGrid">
