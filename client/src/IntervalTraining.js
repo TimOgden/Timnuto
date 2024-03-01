@@ -24,6 +24,16 @@ function IntervalTraining() {
         octave: 12
     };
 
+    const intervals = [
+        [{key: 'blank', value: '--'}, {key: 'unison', value: 'Unison'}],
+        [{key: 'minorSecond', value: 'Minor 2nd'}, {key: 'majorSecond', value: 'Major 2nd'}],
+        [{key: 'minorThird', value: 'Minor 3rd'}, {key: 'majorThird', value: 'Major 3rd'}],
+        [{key: 'blank', value: '--'}, {key: 'perfectFourth', value: 'Perfect 4th'}],
+        [{key: 'tritone', value: 'Tritone'}, {key: 'perfectFifth', value: 'Perfect 5th'}],
+        [{key: 'minorSixth', value: 'Minor 6th'}, {key: 'majorSixth', value: 'Major 6th'}],
+        [{key: 'minorSeventh', value: 'Minor 7th'}, {key: 'majorSeventh', value: 'Major 7th'}],
+        [{key: 'blank', value: '--'}, {key: 'octave', value: 'Octave'}]
+    ];
 
     function randomNote() {
         const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
@@ -90,6 +100,7 @@ function IntervalTraining() {
 
     function submitGuess(interval, event) {
         event.stopPropagation();
+        if (questionComplete) return;
         event.target.style.backgroundColor = 'red';
         if (interval === currentInterval) {
             event.target.style.backgroundColor = 'green';
@@ -110,24 +121,39 @@ function IntervalTraining() {
         })
         setQuestionComplete(true);
     }
+    window.onload = playInterval;
 
     return (
-
     <div>
         <h1>Interval Training</h1>
         <div class="container" onClick={() => playInterval()}>
-            <ul>
-                {Object.keys(INTERVALS).map((interval) => (
-                    <li key={interval}>
-                        <button key={interval}
-                            class='guessButton'
-                            data-interval={interval}
-                            onClick={(event) => submitGuess(interval, event)}>
-                                {interval.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}
-                        </button>
-                    </li>
-                ))}
-            </ul>
+            <div className="intervalsGrid">
+                <ul>
+                    {intervals.map((interval) => (
+                        <li>
+                            <button
+                            key={interval[0].key}
+                            className="guessButton"
+                            data-interval={interval[0].key}
+                            onClick={(event) => submitGuess(interval[0].key, event)}
+                            disabled={interval[0].key === 'blank'}
+                            >
+                                {interval[0].value}
+                            </button>
+                            <button
+                            key={interval[1].key}
+                            className="guessButton"
+                            data-interval={interval[1].key}
+                            onClick={(event) => submitGuess(interval[1].key, event)}
+                            disabled={interval[1].key === 'blank'}
+                            >
+                                {interval[1].value}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+                    
+            </div>
         </div>
         <div class="buttons">
             
