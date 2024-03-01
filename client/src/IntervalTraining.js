@@ -2,13 +2,40 @@ import * as Tone from 'tone';
 import React, { useState } from 'react';
 
 
+let currentInterval = null;
+let baseNote = null;
+let newNote = null;
+
 function IntervalTraining() {
-    function randomizeInterval() {
-        // List of all notes in one octave for simplicity
+    const [questionComplete, setQuestionComplete] = useState(false);
+    const INTERVALS = {
+        unison: 0,
+        minorSecond: 1,
+        majorSecond: 2,
+        minorThird: 3,
+        majorThird: 4,
+        perfectFourth: 5,
+        tritone: 6,
+        perfectFifth: 7,
+        minorSixth: 8,
+        majorSixth: 9,
+        minorSeventh: 10,
+        majorSeventh: 11,
+        octave: 12
+    };
+
+
+    function randomNote() {
         const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
         const randomNote = notes[Math.floor(Math.random() * notes.length)];
-        const randomOctave = Math.floor(Math.random() * 2 + 3);
+        const randomOctave = Math.floor((Math.random() * 3) + 3);
         baseNote = randomNote + randomOctave.toString();
+        return baseNote;
+    }
+
+    function randomizeInterval(note) {
+        // List of all notes in one octave for simplicity
+        const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     
         // Extract interval values and pick a random one
         const intervalKeys = Object.keys(INTERVALS);
@@ -16,8 +43,8 @@ function IntervalTraining() {
         currentInterval = randomIntervalName;
         const randomIntervalValue = INTERVALS[randomIntervalName];
         // Extract the base note and octave
-        const baseNoteLetter = baseNote.slice(0, -1); // Assumes the last character is the octave number
-        const baseNoteOctave = parseInt(baseNote.slice(-1), 10);
+        const baseNoteLetter = note.slice(0, -1); // Assumes the last character is the octave number
+        const baseNoteOctave = parseInt(note.slice(-1), 10);
     
         // Find the index of the base note in the notes array
         const baseNoteIndex = notes.indexOf(baseNoteLetter);
@@ -31,15 +58,16 @@ function IntervalTraining() {
     
         // Construct the new note
         newNote = notes[newNoteIndex] + newOctave;
-        console.log(randomIntervalName);
-        console.log(baseNote, newNote);
+        return [baseNote, newNote, currentInterval];
     }
     
     function playInterval() {
         const synth = new Tone.Synth().toDestination();
         if (baseNote === null || newNote === null) {
-            randomizeInterval();
+            randomizeInterval(randomNote());
         }
+        console.log(baseNote, newNote);
+        console.log(currentInterval);
         const now = Tone.now();
         Tone.start();
         synth.triggerAttackRelease(baseNote, "8n", now);
@@ -49,16 +77,8 @@ function IntervalTraining() {
     function startQuestion() {
         setQuestionComplete(false);
         clearColors();
-        randomizeInterval();
+        randomizeInterval(randomNote());
         playInterval();
-    }
-    
-    function restartOrPlay() {
-        if (questionComplete) {
-            startQuestion();
-        } else {
-            playInterval();
-        }
     }
 
     function clearColors() {
@@ -91,29 +111,8 @@ function IntervalTraining() {
         setQuestionComplete(true);
     }
 
-    const INTERVALS = {
-        unison: 0,
-        minorSecond: 1,
-        majorSecond: 2,
-        minorThird: 3,
-        majorThird: 4,
-        perfectFourth: 5,
-        tritone: 6,
-        perfectFifth: 7,
-        minorSixth: 8,
-        majorSixth: 9,
-        minorSeventh: 10,
-        majorSeventh: 11,
-        octave: 12
-    };
-
-    let currentInterval = null;
-    let baseNote = null;
-    let newNote = null;
-
-    window.onload = restartOrPlay;
-    const [questionComplete, setQuestionComplete] = useState(false);
     return (
+
     <div>
         <h1>Interval Training</h1>
         <div class="container" onClick={() => playInterval()}>
