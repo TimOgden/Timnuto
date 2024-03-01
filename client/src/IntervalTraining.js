@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import TwoColumns from './TwoColumns'
 
 let currentInterval = null;
 let baseNote = null;
@@ -130,31 +130,7 @@ function IntervalTraining() {
         <h1>Interval Training</h1>
         <div class="container" onClick={() => playInterval()}>
             <div className="intervalsGrid">
-                <ul>
-                    {intervals.map((interval) => (
-                        <li>
-                            <button
-                            key={interval[0].key}
-                            className="guessButton"
-                            data-interval={interval[0].key}
-                            onClick={(event) => submitGuess(interval[0].key, event)}
-                            disabled={interval[0].key === 'blank'}
-                            >
-                                {interval[0].value}
-                            </button>
-                            <button
-                            key={interval[1].key}
-                            className="guessButton"
-                            data-interval={interval[1].key}
-                            onClick={(event) => submitGuess(interval[1].key, event)}
-                            disabled={interval[1].key === 'blank'}
-                            >
-                                {interval[1].value}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-                    
+                <TwoColumns data={intervals} onClickHandler={submitGuess}/>
             </div>
         </div>
         <div class="buttons">
