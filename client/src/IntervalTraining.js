@@ -128,12 +128,12 @@ function IntervalTraining() {
     <div>
         <Link to='/'>Home</Link>
         <h1>Interval Training</h1>
-        <div class="container" onClick={() => playInterval()}>
+        <div className="container" onClick={() => playInterval()}>
             <div className="intervalsGrid">
                 <TwoColumns data={intervals} onClickHandler={submitGuess}/>
             </div>
         </div>
-        <div class="buttons">
+        <div className="buttons">
             
             {questionComplete ? (
                 <button onClick={() => startQuestion()}>Next Question</button>
