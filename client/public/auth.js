@@ -1,0 +1,3 @@
+function loggedInThroughGoogle(googleUser) {
+    debugger;
+}
