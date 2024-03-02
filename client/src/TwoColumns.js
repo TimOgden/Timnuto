@@ -4,8 +4,8 @@ function TwoColumns({
 }) {
     return (
         <ul>
-            {data.map((interval) => (
-                <li>
+            {data.map((interval, i) => (
+                <li key={i}>
                     <button
                     key={interval[0].key}
                     className="guessButton"
