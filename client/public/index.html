@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="22748110971-f0hvuth7g7ufdc9tfg7c9r2p65quli6m.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -28,6 +30,7 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
     <div id="root"></div>
     <!--
       This HTML file is a template.

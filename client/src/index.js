@@ -4,6 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+function onSignIn(googleUser) {
+  var id_token = googleUser.getAuthResponse().id_token;
+  console.log(id_token);
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
