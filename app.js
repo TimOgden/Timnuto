@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const axios = require('axios');
 const app = express();
 const cors = require('cors');
 app.use(express.json());
@@ -10,7 +11,14 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.post('/guess', (req, res) => {
   console.log(req.body);
-  res.sendStatus(200);
+
+  axios.post(`${process.env.BACKEND_URL}/guess`, {
+    data: req.body
+  }).then(response => {
+    res.status(200).json(response.data);
+  }).catch(error => {
+    console.log(error);
+  });
 });
 
 // The "catchall" handler: for any request that doesn't
