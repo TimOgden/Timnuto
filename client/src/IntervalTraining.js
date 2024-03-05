@@ -8,9 +8,9 @@ let currentInterval = null;
 let baseNote = null;
 let newNote = null;
 
-function IntervalTraining({
+function IntervalTraining(
     profile
-}) {
+) {
     const [questionComplete, setQuestionComplete] = useState(false);
     const INTERVALS = {
         unison: 0,
@@ -119,7 +119,8 @@ function IntervalTraining({
         axios.post(`http://localhost:3001/guess`, {currentInterval, 
             interval, 
             isCorrect,
-            datetime: Date.now()
+            datetime: Date.now(),
+            profile
         }, (res) => {
 
         }, (err) => {

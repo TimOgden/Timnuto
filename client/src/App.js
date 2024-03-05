@@ -42,8 +42,8 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/intervalTraining" element={<IntervalTraining profile/>} />
-            <Route path="/chordTraining" element={<ChordTraining profile/>} />
+            <Route path="/intervalTraining" element={<IntervalTraining profile={profile}/>} />
+            <Route path="/chordTraining" element={<ChordTraining profile={profile}/>} />
           </Routes>
         </Router>
       ) : (
