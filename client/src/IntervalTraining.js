@@ -1,13 +1,16 @@
 import * as Tone from 'tone';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import TwoColumns from './TwoColumns'
+import TwoColumns from './TwoColumns';
+import axios from 'axios';
 
 let currentInterval = null;
 let baseNote = null;
 let newNote = null;
 
-function IntervalTraining() {
+function IntervalTraining({
+    profile
+}) {
     const [questionComplete, setQuestionComplete] = useState(false);
     const INTERVALS = {
         unison: 0,
@@ -103,13 +106,24 @@ function IntervalTraining() {
         event.stopPropagation();
         if (questionComplete) return;
         event.target.style.backgroundColor = 'red';
-        if (interval === currentInterval) {
+        const isCorrect = interval === currentInterval;
+        if (isCorrect) {
             event.target.style.backgroundColor = 'green';
             console.log('Correct!');
             setQuestionComplete(true);
         } else {
             console.log(`You guessed ${interval} but it was a ${currentInterval}`);
         }
+
+        axios.post(`http://localhost:3001/guess`, {currentInterval, 
+            interval, 
+            isCorrect,
+            datetime: Date.now()
+        }, (res) => {
+
+        }, (err) => {
+            console.log(err);
+        });
     }
 
     function revealAnswer(event) {
