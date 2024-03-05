@@ -105,6 +105,7 @@ function IntervalTraining({
     function submitGuess(interval, event) {
         event.stopPropagation();
         if (questionComplete) return;
+        if (currentInterval === null) return;
         event.target.style.backgroundColor = 'red';
         const isCorrect = interval === currentInterval;
         if (isCorrect) {
